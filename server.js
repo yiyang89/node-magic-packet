@@ -58,6 +58,35 @@ function initializeRegistry(callback) {
     });
 }
 
+app.post("/api/removeComputer", function(req, res) {
+  var user = req.body.username;
+  var ip = req.body.ip;
+  var mac = req.body.mac;
+  fs.readFile('registeredComputers.txt', 'utf8', function(err, contents) {
+      // On successful read, convert into an object, push new data,
+      // and write new contents
+      // console.log("File read...");
+      var registerObject = JSON.parse(contents);
+      // Search registerObject for matching user/ip/mac
+      for (var i = 0; i < registerObject.length; i++) {
+        if (registerObject[i].username == user &&
+            registerObject[i].ip == ip &&
+            registerObject[i].mac == mac) {
+              console.log("Found matching entry, removing....");
+              registerObject.splice(i, 1);
+            }
+      }
+      fs.writeFile("registeredComputers.txt", JSON.stringify(registerObject), function(err) {
+          if (err) {
+              return console.log(err);
+          }
+          console.log("The file was saved!");
+          res.writeHead(200);
+          res.write(JSON.stringify(registerObject));
+          res.end();
+      });
+  });
+})
 
 app.post("/api/register", function(req, res) {
     var user = req.body.username;

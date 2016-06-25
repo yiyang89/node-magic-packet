@@ -30,9 +30,21 @@ angular.module('rwolApp', [])
           $scope.wakeResponse = "Successfully submitted wake response";
         });
       }
+      $scope.removeComputer = function(name, ip, mac) {
+        var data = "{\"username\" : \"" + name + "\","+
+                      "\"ip\" : \"" + ip + "\"," +
+                      "\"mac\" : \"" + mac + "\"" + "}";
+        $http.post('/api/removeComputer', data).success(function(data, status) {
+          $scope.userlist = data;
+        });
+      }
       $scope.retrieveComputers = function() {
         $http.get('/api/retrieveComputers').success(function(data, status) {
-          $scope.userlist = data;
+          if (data.length == 0) {
+            $scope.retrievalResponse = "Server currently has no registered computers";
+          } else {
+            $scope.userlist = data;
+          }
         })
       }
       // Dining room desktop ip and mac address

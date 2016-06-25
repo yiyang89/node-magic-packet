@@ -58,11 +58,13 @@
                   <td class="wake-button">
                     <button type="button" ng-click="wakeComputer(computer.username, computer.ip, computer.mac)">Wake</button>
                   </td>
-
-
+                  <td class="remove-button">
+                    <button type="button" ng-click="removeComputer(computer.username, computer.ip, computer.mac)">Remove</button>
+                  </td>
                 </tr>
               </table>
               {{wakeResponse}}
+              {{retrievalResponse}}
 
               <!-- TODO: ANOTHER TABLE SHOWING ALL REGISTERED COMPUTERS -->
               <!-- NAME, IP, MAC, WAKE BUTTON -->
