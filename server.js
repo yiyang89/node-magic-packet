@@ -30,39 +30,60 @@ app.get("/", function(req, res) {
 });
 
 app.get("/api/retrieveComputers", function(req, res) {
-  // Check if file exists, if not then create an empty one "[]"
 
-  // Read file of stored computers
-  fs.readFile('registeredComputers.txt', 'utf8', function(err,contents) {
-    res.writeHead(200);
-    res.write(contents);
-    res.end();
-  })
-})
-
-app.post("/api/register", function(req, res)  {
-  var user = req.body.username;
-  var ip = req.body.ip;
-  var mac = req.body.mac;
-  fs.readFile('registeredComputers.txt', 'utf8', function(err, contents) {
-    // On successful read, convert into an object, push new data,
-    // and write new contents
-    var registerObject = JSON.parse(contents);
-    registerObject.push(req.body);
-    fs.writeFile("registeredComputers.txt", JSON.stringify(registerObject), function(err) {
-      if(err) {
-          return console.log(err);
-      }
-
-      console.log("The file was saved!");
+    // Read file of stored computers
+    initializeRegistry(function(result) {
+        console.log(result);
+        fs.readFile('registeredComputers.txt', 'utf8', function(err, contents) {
+            res.writeHead(200);
+            res.write(contents);
+            res.end();
+        });
     });
-  });
+});
 
-  console.log(req.body);
-  res.writeHead(200);
-  res.write(JSON.stringify(req.body));
-  res.end();
-})
+function initializeRegistry(callback) {
+    // Check if file exists, if not then create an empty one "[]"
+    fs.access('registeredComputers.txt', fs.F_OK, function(err) {
+        if (err) {
+            // It isn't accessible, so initialize it.
+            fs.writeFile("registeredComputers.txt", "[]", function(err) {
+                if (err) {
+                    callback(err);
+                }
+                callback("registeredComputers.txt initialized");
+            });
+        }
+        callback("Accessing registeredComputers.txt");
+    });
+}
+
+
+app.post("/api/register", function(req, res) {
+    var user = req.body.username;
+    var ip = req.body.ip;
+    var mac = req.body.mac;
+    initializeRegistry(function(result) {
+      console.log(result);
+      fs.readFile('registeredComputers.txt', 'utf8', function(err, contents) {
+          // On successful read, convert into an object, push new data,
+          // and write new contents
+          // console.log("File read...");
+          var registerObject = JSON.parse(contents);
+          registerObject.push(req.body);
+          fs.writeFile("registeredComputers.txt", JSON.stringify(registerObject), function(err) {
+              if (err) {
+                  return console.log(err);
+              }
+              console.log("The file was saved!");
+          });
+      });
+      console.log(req.body);
+      res.writeHead(200);
+      res.write(JSON.stringify(req.body));
+      res.end();
+    })
+});
 
 app.post("/api/wakeComputer", function(req, res) {
   // According to:
