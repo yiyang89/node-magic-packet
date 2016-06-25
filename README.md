@@ -1,2 +1,2 @@
-# node-magic-packet
-simple angular/node magic packet web app
+# rasp-wake-on-lan
+NodeJS/AngularJS page listing registered users with option to wake sleeping devices.

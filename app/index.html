@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Magic Packet Console</title>
+
+    <!-- Bootstrap core CSS -->
+    <!-- <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+
+    <!-- Custom styles for this template -->
+    <!-- <link href="cover.css" rel="stylesheet">
+    <link href="css/irc.css" rel="stylesheet"> -->
+  </head>
+
+  <body>
+          <!-- <div class="inner cover"> -->
+          <div ng-app="rwolApp">
+            <div ng-controller="rwolApp-controller">
+              <!-- Table layout (flexible table later as more users register) -->
+              <table class="main-table">
+                <!-- Name, IP, MAC -->
+                <td class="name">
+                  <input type="text" ng-model="nameInput" placeholder="Nickname"> <br />
+                </td>
+                <td class="ip">
+                  <input type="text" ng-model="ipInput" placeholder="IP Address"> <br />
+                </td>
+                <td class="mac">
+                  <input type="text" ng-model="macInput" placeholder="Mac Address"> <br />
+                </td>
+                <td class="submit-button">
+                  <button type="button" ng-click="registerInfo()">Register</button>
+                </td>
+              </table>
+              <br />
+              Registered Computers:
+              <button type="button" ng-click="retrieveComputers()">Retrieve List From Server</button>
+              <table class="registered-table">
+                <tr ng-repeat="computer in userlist">
+                  <!-- {{computer}} -->
+                  <!-- {{computer.username}} -->
+                  <td class="name">
+                    {{computer.username}} ***********
+                  </td>
+                  <td class="ip">
+                    {{computer.ip}} ***********
+                  </td>
+                  <td class="mac">
+                    {{computer.mac}}
+                  </td>
+                  <td class="wake-button">
+                    <button type="button" ng-click="wakeComputer(computer.username, computer.ip, computer.mac)">Wake</button>
+                  </td>
+
+
+                </tr>
+              </table>
+              {{wakeResponse}}
+
+              <!-- TODO: ANOTHER TABLE SHOWING ALL REGISTERED COMPUTERS -->
+              <!-- NAME, IP, MAC, WAKE BUTTON -->
+            </div>
+          </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/lib/angular/angular.js"></script>
+    <script src="/lib/angular/angular-route.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/services.js"></script>
+    <script src="/js/controllers.js"></script>
+    <script src="/js/filters.js"></script>
+    <script src="/js/directives.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!-- <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+  </body>
+</html>

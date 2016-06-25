@@ -1,0 +1,25 @@
+{
+  "name": "rasp-wake-on-lan",
+  "version": "1.0.0",
+  "description": "NodeJS/AngularJS page listing registered users with option to wake sleeping devices.",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yiyang89/rasp-wake-on-lan.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yiyang89/rasp-wake-on-lan/issues"
+  },
+  "homepage": "https://github.com/yiyang89/rasp-wake-on-lan#readme"
+}
